@@ -1,6 +1,6 @@
 # llm-finetune
 
-A Parameter-Efficient Fine-Tuning (`PEFT`) and Post-Training Alignment library built from scratch in Python and PyTorch. Implements **LoRA**, **DoRA** (Weight-Decomposed Low-Rank Adaptation), **4-bit NormalFloat (`NF4`) QLoRA** quantization with nibble packing, **Supervised Fine-Tuning (`SFT`)** with prompt-loss masking, and **Direct Preference Optimization (`DPO`)** alignment.
+A Parameter-Efficient Fine-Tuning (`PEFT`) and Post-Training Alignment library built from scratch in Python and PyTorch. Implements LoRA, DoRA (Weight-Decomposed Low-Rank Adaptation), 4-bit NormalFloat (`NF4`) QLoRA quantization with nibble packing, Supervised Fine-Tuning (`SFT`) with prompt-loss masking, and Direct Preference Optimization (`DPO`) alignment.
 
 ## 15-Day Incremental Engineering Roadmap (Month 4, Days 106–120)
 
