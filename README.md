@@ -84,7 +84,7 @@ llm-finetune/
 | :--- | :--- | :--- |
 | **`LoRA`** | `h = W_0 x + (alpha / r) * (B @ A) x`, with `B = 0` at `t = 0` | Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models* (ICLR 2022) |
 | **`rsLoRA`** | Rank-stabilized scaling factor `alpha / sqrt(r)` | Kalajdzievski, *A Rank Stabilization Scaling Factor for Fine-Tuning with LoRA* (2023) |
-| **`DoRA`** | `W = m * (W_0 + s * B @ A) / ||W_0 + s * B @ A||_c` | Liu et al., *DoRA: Weight-Decomposed Low-Rank Adaptation* (ICML 2024 Oral) |
+| **`DoRA`** | `W = m * (W_0 + s * B @ A) / ‖W_0 + s * B @ A‖_2` | Liu et al., *DoRA: Weight-Decomposed Low-Rank Adaptation* (ICML 2024 Oral) |
 | **`QLoRA (NF4)`** | 16-level normal quantile codebook packed 2 nibbles/`uint8` + blockwise `absmax` | Dettmers et al., *QLoRA: Efficient Finetuning of Quantized LLMs* (NeurIPS 2023) |
 | **`DPO`** | `-log sigmoid(beta * ((log pi_theta(y_w) - log pi_ref(y_w)) - (log pi_theta(y_l) - log pi_ref(y_l))))` | Rafailov et al., *Direct Preference Optimization: Your Language Model is Secretly a Reward Model* (NeurIPS 2023) |
 
