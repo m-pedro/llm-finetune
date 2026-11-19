@@ -62,7 +62,8 @@ llm-finetune/
                                     ▼
   ┌───────────────────────────────────────────────────────────────────┐
   │ 2. Stage 1: Supervised Fine-Tuning (SFT with Prompt Masking)      │
-  │   • Input : <|im_start|>user\n...<|im_end|>\n<|im_start|>assistant│
+  │   • Prompt: <|im_start|>user\n...<|im_end|>                       │
+  │   • Target: <|im_start|>assistant\n{response}<|im_end|>\n         │
   │   • Labels: [-100, -100, ..., -100, tok_1, tok_2, ..., <|im_end|>]│
   └─────────────────────────────────┬─────────────────────────────────┘
                                     │
