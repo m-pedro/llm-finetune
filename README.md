@@ -47,32 +47,32 @@ llm-finetune/
 ## Two-Stage Post-Training & PEFT Architecture
 
 ```text
-  ┌─────────────────────────────────────────────────────────────────────┐
-  │ 1. Parameter-Efficient Adapter Layer (LoRA / DoRA / 4-bit QLoRA)    │
-  │                                                                     │
-  │              ┌───────────────────────────────┐                      │
-  │              │ Frozen Base Weight W_0        │                      │
-  │   x ────────►│ (fp32 / bf16 or 4-bit NF4)    ├────────► (+) ──► h   │
-  │     │        └───────────────────────────────┘           ▲          │
-  │     │                                                    │          │
-  │     └───────► [ A: (r, d_in) ] ──► [ B: (d_out, r) ] ──► * (alpha/r)│
-  │               (Kaiming Init)         (Zero Init)                    │
-  └─────────────────────────────────────────────────────────────────────┘
-                                     │
-                                     ▼
-  ┌─────────────────────────────────────────────────────────────────────┐
-  │ 2. Stage 1: Supervised Fine-Tuning (SFT with Prompt Masking)        │
-  │   • Input : <|im_start|>user\n...<|im_end|>\n<|im_start|>assistant\n│
-  │   • Labels: [ -100, -100, ..., -100,  tok_1, tok_2, ..., <|im_end|>]│
-  └─────────────────────────────────────────────────────────────────────┘
-                                     │
-                                     ▼
-  ┌─────────────────────────────────────────────────────────────────────┐
-  │ 3. Stage 2: Direct Preference Optimization (DPO Alignment)          │
-  │   • Maximizes margin: beta * (log(pi_theta(y_w|x)/pi_ref(y_w|x))    │
-  │                             - log(pi_theta(y_l|x)/pi_ref(y_l|x)))   │
-  │   • Export: merge_and_unload() folds B @ A into W_0 (zero overhead) │
-  └─────────────────────────────────────────────────────────────────────┘
+  ┌───────────────────────────────────────────────────────────────────┐
+  │ 1. Parameter-Efficient Adapter Layer (LoRA / DoRA / 4-bit QLoRA)  │
+  │                                                                   │
+  │            ┌───────────────────────────────┐                      │
+  │            │ Frozen Base Weight W_0        │                      │
+  │   x ──────►│ (fp32 / bf16 or 4-bit NF4)    ├──────► (+) ──► h     │
+  │     │      └───────────────────────────────┘         ▲            │
+  │     │                                                │            │
+  │     └─────► [ A: (r, d_in) ] ─► [ B: (d_out, r) ] ─► * (alpha/r)  │
+  │             (Kaiming Init)       (Zero Init)                      │
+  └─────────────────────────────────┬─────────────────────────────────┘
+                                    │
+                                    ▼
+  ┌───────────────────────────────────────────────────────────────────┐
+  │ 2. Stage 1: Supervised Fine-Tuning (SFT with Prompt Masking)      │
+  │   • Input : <|im_start|>user\n...<|im_end|>\n<|im_start|>assistant│
+  │   • Labels: [-100, -100, ..., -100, tok_1, tok_2, ..., <|im_end|>]│
+  └─────────────────────────────────┬─────────────────────────────────┘
+                                    │
+                                    ▼
+  ┌───────────────────────────────────────────────────────────────────┐
+  │ 3. Stage 2: Direct Preference Optimization (DPO Alignment)        │
+  │   • Maximizes margin: beta * (log(pi_theta(y_w|x)/pi_ref(y_w|x))  │
+  │                             - log(pi_theta(y_l|x)/pi_ref(y_l|x))) │
+  │   • Export: merge_and_unload() folds B @ A into W_0 (0 overhead)  │
+  └───────────────────────────────────────────────────────────────────┘
 ```
 
 ---
